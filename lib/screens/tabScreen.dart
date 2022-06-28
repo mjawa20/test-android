@@ -3,6 +3,7 @@ import 'package:test_android/screens/historyScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:test_android/screens/main_drawer.dart';
+import 'package:test_android/screens/productScreen.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   final List<Map<String, dynamic>> _pages = [
-    {'title': 'History', 'view': const HistoryScreen()},
+    {'title': 'Product', 'view': const ProductScreen()},
     {'title': 'Customer', 'view': const CustomerScreen()}
   ];
   int _currentIndex = 0;

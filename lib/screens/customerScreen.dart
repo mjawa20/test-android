@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:test_android/models/customer.dart';
 import 'package:test_android/models/sales.dart';
+import 'package:test_android/services/customer.dart';
 import 'package:test_android/widgets/cardItem.dart';
 
 class CustomerScreen extends StatefulWidget {
@@ -11,41 +15,127 @@ class CustomerScreen extends StatefulWidget {
 }
 
 class _CustomerScreenState extends State<CustomerScreen> {
-  List<Sales>? sales;
+  List<Customer>? _customers;
+  List<Customer>? _foundCustomers;
   var isLoaded = false;
-  final _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    getData();
+
+    super.initState();
+  }
+
+  getData() async {
+    _customers = await fetchCustomers().getPosts();
+    _foundCustomers = _customers;
+    if (_customers != null) {
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  }
+
+  void _runFilter(String enteredKeyword) {
+    List<Customer>? results;
+
+    if (enteredKeyword.isEmpty) {
+      print('asdasda');
+      results = _customers;
+    } else {
+      print('asup');
+      results = _customers
+          ?.where((element) =>
+              element.nama.toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      _foundCustomers = results;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-
     return Scaffold(
         body: Column(
       children: [
+        const SizedBox(
+          height: 20,
+        ),
         Container(
-          child: SizedBox(
-            height: 100,
-            child: TextField(
-              decoration: InputDecoration(
-                  hintText: "Search",
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 20,
-                  ),
-                  border: OutlineInputBorder()),
-              controller: _searchController,
-              keyboardType: TextInputType.text,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TextField(
+            onChanged: (value) => _runFilter(value),
+            decoration: const InputDecoration(
+                fillColor: Colors.white,
+                hintText: "Search",
+                prefixIcon: Icon(
+                  Icons.search,
+                  size: 20,
+                ),
+                border: OutlineInputBorder()),
+            keyboardType: TextInputType.text,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Visibility(
+          replacement: const Expanded(
+            flex: 1,
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (ctx, index) {
-              return CardItem(id: 12, title: 'jawhir', subtitle: '192837');
-            },
+          visible: isLoaded,
+          child: Expanded(
+            flex: 1,
+            child: isLoaded && _foundCustomers!.isNotEmpty
+                ? ListView.builder(
+                    itemCount: _foundCustomers?.length,
+                    itemBuilder: (ctx, index) {
+                      return CardItem(
+                          code: _foundCustomers![index].kode,
+                          title: _customers![index].nama,
+                          subtitle: _customers![index].telp);
+                    },
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.remove_circle_outline,
+                        size: 80,
+                        color: Colors.pink,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          "Customer is Empty",
+                          style: TextStyle(color: Colors.pink, fontSize: 18),
+                        ),
+                      ),
+                    ],
+                  ),
           ),
         ),
+        const SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: Ink(
+            decoration: const ShapeDecoration(
+              color: Colors.pink,
+              shape: CircleBorder(),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.add),
+              color: Colors.white,
+              onPressed: () {},
+            ),
+          ),
+        )
       ],
     ));
   }

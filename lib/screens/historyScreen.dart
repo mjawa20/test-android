@@ -18,12 +18,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return const Scaffold(
       body: Card(
         elevation: 3,
-        margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
+        margin: EdgeInsets.symmetric(horizontal: 6, vertical: 5),
         child: ListTile(
           leading: CircleAvatar(
             radius: 30,
             child: Padding(
-              padding: const EdgeInsets.all(6),
+              padding: EdgeInsets.all(6),
               child: FittedBox(
                 child: Text('\$asdasd'),
               ),

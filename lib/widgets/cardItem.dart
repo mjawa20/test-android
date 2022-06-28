@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 
 class CardItem extends StatelessWidget {
-  final int id;
+  final String code;
   final String title;
   final String subtitle;
   // final Function deleteTx;
-  CardItem({required this.id, required this.title, required this.subtitle});
+  CardItem({required this.code, required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class CardItem extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(6),
             child: FittedBox(
-              child: Text(id.toString()),
+              child: Text(code),
             ),
           ),
         ),

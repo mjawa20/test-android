@@ -1,10 +1,12 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:test_android/models/customer.dart';
-import 'package:test_android/models/sales.dart';
 import 'package:test_android/services/customer.dart';
 import 'package:test_android/widgets/cardItem.dart';
+import 'package:test_android/widgets/itemList.dart';
+import 'package:test_android/widgets/modal.dart';
 
 class CustomerScreen extends StatefulWidget {
   static String routeName = '/customer';
@@ -19,15 +21,19 @@ class _CustomerScreenState extends State<CustomerScreen> {
   List<Customer>? _foundCustomers;
   var isLoaded = false;
 
+  final _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  final Random _rnd = Random();
+
   @override
   void initState() {
-    getData();
+    _getData();
 
     super.initState();
   }
 
-  getData() async {
-    _customers = await fetchCustomers().getPosts();
+  _getData() async {
+    _customers = await CustomerService().getCustomers();
     _foundCustomers = _customers;
     if (_customers != null) {
       setState(() {
@@ -36,14 +42,42 @@ class _CustomerScreenState extends State<CustomerScreen> {
     }
   }
 
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+  _addNewTransaction(String nama, int telp) async {
+    final newCustomer = Customer(
+        id: 0, kode: getRandomString(8), nama: nama, telp: telp.toString());
+
+    var response = await CustomerService.createCustomer(newCustomer);
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _foundCustomers?.add(newCustomer);
+      });
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Success Post")));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Failde Post")));
+    }
+  }
+
+  void _showAddTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return NewTransaction(_addNewTransaction);
+        });
+  }
+
   void _runFilter(String enteredKeyword) {
     List<Customer>? results;
 
     if (enteredKeyword.isEmpty) {
-      print('asdasda');
       results = _customers;
     } else {
-      print('asup');
       results = _customers
           ?.where((element) =>
               element.nama.toLowerCase().contains(enteredKeyword.toLowerCase()))
@@ -81,44 +115,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
         const SizedBox(
           height: 20,
         ),
-        Visibility(
-          replacement: const Expanded(
-            flex: 1,
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
-          visible: isLoaded,
-          child: Expanded(
-            flex: 1,
-            child: isLoaded && _foundCustomers!.isNotEmpty
-                ? ListView.builder(
-                    itemCount: _foundCustomers?.length,
-                    itemBuilder: (ctx, index) {
-                      return CardItem(
-                          code: _foundCustomers![index].kode,
-                          title: _customers![index].nama,
-                          subtitle: _customers![index].telp);
-                    },
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.remove_circle_outline,
-                        size: 80,
-                        color: Colors.pink,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          "Customer is Empty",
-                          style: TextStyle(color: Colors.pink, fontSize: 18),
-                        ),
-                      ),
-                    ],
-                  ),
-          ),
+        ItemList(
+          isLoaded: isLoaded,
+          foundCustomers: _foundCustomers,
         ),
         const SizedBox(
           height: 20,
@@ -132,7 +131,9 @@ class _CustomerScreenState extends State<CustomerScreen> {
             child: IconButton(
               icon: const Icon(Icons.add),
               color: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                _showAddTransaction(context);
+              },
             ),
           ),
         )

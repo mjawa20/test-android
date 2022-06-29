@@ -30,4 +30,13 @@ class CustomerService {
 
     return response;
   }
+
+  static Future<http.Response> deleteCustomer(String id) async {
+    var client = http.Client();
+    var response = await client.delete(
+      Uri.parse('https://test-be-jawa.herokuapp.com/api/customers/' + id),
+    );
+
+    return response;
+  }
 }

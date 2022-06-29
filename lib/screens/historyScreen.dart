@@ -14,7 +14,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
   var isLoaded = false;
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return const Scaffold(
       body: Card(
         elevation: 3,

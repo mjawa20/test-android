@@ -13,7 +13,6 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  DateTime? _selectedDate;
 
   void _submit() {
     if (_amountController.text.isEmpty) {
@@ -58,7 +57,10 @@ class _NewTransactionState extends State<NewTransaction> {
                 onSubmitted: (_) => _submit,
               ),
               ElevatedButton(
-                  onPressed: _submit,
+                  onPressed: _titleController.text.isEmpty ||
+                          _amountController.text.isEmpty
+                      ? null
+                      : _submit,
                   child: const Text(
                     'Submit',
                   )),

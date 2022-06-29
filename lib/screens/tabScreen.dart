@@ -1,9 +1,8 @@
 import 'package:test_android/screens/customerScreen.dart';
-import 'package:test_android/screens/historyScreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:test_android/screens/main_drawer.dart';
-import 'package:test_android/screens/productScreen.dart';
+import 'package:test_android/screens/BarangScreen.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -12,7 +11,7 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   final List<Map<String, dynamic>> _pages = [
-    {'title': 'Product', 'view': const ProductScreen()},
+    {'title': 'Product', 'view': const BarangScreen()},
     {'title': 'Customer', 'view': const CustomerScreen()}
   ];
   int _currentIndex = 0;
@@ -32,7 +31,7 @@ class _TabsScreenState extends State<TabsScreen> {
         bottomNavigationBar: BottomNavigationBar(
           onTap: _selectPage,
           currentIndex: _currentIndex,
-          items: [
+          items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.category), label: 'Categories'),
             BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorites'),

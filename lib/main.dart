@@ -1,6 +1,6 @@
 import 'package:test_android/screens/customerScreen.dart';
 import 'package:test_android/screens/historyScreen.dart';
-import 'package:test_android/screens/productScreen.dart';
+import 'package:test_android/screens/BarangScreen.dart';
 import 'package:test_android/screens/tabScreen.dart';
 
 import 'package:flutter/material.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => TabsScreen(),
         HistoryScreen.routeName: (ctx) => const HistoryScreen(),
         CustomerScreen.routeName: (ctx) => const CustomerScreen(),
-        ProductScreen.routeName: (ctx) => const ProductScreen(),
+        BarangScreen.routeName: (ctx) => const BarangScreen(),
       },
     );
   }

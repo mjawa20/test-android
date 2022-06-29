@@ -1,22 +1,22 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:test_android/models/customer.dart';
-import 'package:test_android/services/customer.dart';
+import 'package:test_android/models/barang.dart';
+import 'package:test_android/services/barang.dart';
 import 'package:test_android/widgets/itemList.dart';
 import 'package:test_android/widgets/modal.dart';
 
-class CustomerScreen extends StatefulWidget {
+class BarangScreen extends StatefulWidget {
   static String routeName = '/customer';
-  const CustomerScreen({Key? key}) : super(key: key);
+  const BarangScreen({Key? key}) : super(key: key);
 
   @override
-  State<CustomerScreen> createState() => _CustomerScreenState();
+  State<BarangScreen> createState() => _BarangScreenState();
 }
 
-class _CustomerScreenState extends State<CustomerScreen> {
-  List<Customer>? _customers;
-  List<Customer>? _foundCustomers;
+class _BarangScreenState extends State<BarangScreen> {
+  List<Barang>? _customers;
+  List<Barang>? _foundBarangs;
   var isLoaded = false;
 
   final _chars =
@@ -34,8 +34,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
     setState(() {
       isLoaded = false;
     });
-    _customers = await CustomerService().getCustomers();
-    _foundCustomers = _customers;
+    _customers = await BarangService().getBarangs();
+    _foundBarangs = _customers;
     if (_customers != null) {
       setState(() {
         isLoaded = true;
@@ -46,11 +46,11 @@ class _CustomerScreenState extends State<CustomerScreen> {
   String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
       length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
-  void _addNewCustomer(String nama, int telp) async {
-    final newCustomer = Customer(
-        id: 0, kode: getRandomString(8), nama: nama, telp: telp.toString());
+  void _addNewBarang(String nama, int harga) async {
+    final newBarang =
+        Barang(id: 0, kode: getRandomString(8), nama: nama, harga: harga);
 
-    var response = await CustomerService.createCustomer(newCustomer);
+    var response = await BarangService.createBarang(newBarang);
 
     if (response.statusCode == 200) {
       _getData();
@@ -62,8 +62,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
     }
   }
 
-  void _deleteCustomer(String id) async {
-    var response = await CustomerService.deleteCustomer(id);
+  void _deleteBarang(String id) async {
+    var response = await BarangService.deleteBarang(id);
 
     if (response.statusCode == 200) {
       _getData();
@@ -79,12 +79,12 @@ class _CustomerScreenState extends State<CustomerScreen> {
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
-          return NewTransaction(_addNewCustomer);
+          return NewTransaction(_addNewBarang);
         });
   }
 
   void _runFilter(String enteredKeyword) {
-    List<Customer>? results;
+    List<Barang>? results;
 
     if (enteredKeyword.isEmpty) {
       results = _customers;
@@ -95,7 +95,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
           .toList();
     }
     setState(() {
-      _foundCustomers = results;
+      _foundBarangs = results;
     });
   }
 
@@ -127,8 +127,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
         ),
         ItemList(
             isLoaded: isLoaded,
-            foundItems: _foundCustomers,
-            delete: _deleteCustomer),
+            foundItems: _foundBarangs,
+            delete: _deleteBarang),
         const SizedBox(
           height: 20,
         ),

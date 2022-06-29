@@ -1,15 +1,15 @@
-import 'dart:ffi';
+import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_android/models/customer.dart';
 import 'package:test_android/widgets/cardItem.dart';
 
 class ItemList extends StatelessWidget {
   final bool isLoaded;
-  final List<dynamic>? foundCustomers;
+  final List<dynamic>? foundItems;
+  final Function delete;
 
-  ItemList({required this.isLoaded, required this.foundCustomers});
+  ItemList(
+      {required this.isLoaded, required this.foundItems, required this.delete});
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +23,19 @@ class ItemList extends StatelessWidget {
       visible: isLoaded,
       child: Expanded(
         flex: 1,
-        child: isLoaded && foundCustomers!.isNotEmpty
+        child: isLoaded && foundItems!.isNotEmpty
             ? ListView.builder(
-                itemCount: foundCustomers?.length,
+                itemCount: foundItems?.length,
                 itemBuilder: (ctx, index) {
                   return CardItem(
-                      code: foundCustomers![index].kode,
-                      title: foundCustomers![index].nama,
-                      subtitle: foundCustomers![index].telp.isNotEmpty
-                          ? foundCustomers![index].telp
-                          : foundCustomers![index].harga);
+                    id: foundItems![index].id.toString(),
+                    code: foundItems![index].kode,
+                    title: foundItems![index].nama,
+                    subtitle: jsonEncode(foundItems![index]).contains("telp")
+                        ? foundItems![index].telp
+                        : foundItems![index].harga.toString(),
+                    delete: delete,
+                  );
                 },
               )
             : Column(

@@ -2,11 +2,39 @@ import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 
 class CardItem extends StatelessWidget {
+  final String id;
   final String code;
   final String title;
   final String subtitle;
+  final Function delete;
   // final Function deleteTx;
-  CardItem({required this.code, required this.title, required this.subtitle});
+  CardItem(
+      {required this.id,
+      required this.code,
+      required this.title,
+      required this.subtitle,
+      required this.delete});
+
+  void _showDialog(BuildContext ctx) {
+    showDialog(
+        context: ctx,
+        builder: (_) {
+          return AlertDialog(
+            title: const Text("Apakah anda ingin menghapusnya"),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () => {
+                        Navigator.of(ctx).pop(),
+                        delete(id),
+                      },
+                  child: const Text("Yes")),
+              TextButton(
+                  onPressed: () => Navigator.of(ctx).pop(),
+                  child: const Text("no"))
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +61,7 @@ class CardItem extends StatelessWidget {
         subtitle: Text(subtitle),
         trailing: mediaQuery.size.width > 460
             ? TextButton.icon(
-                onPressed: () => null,
+                onPressed: () => delete(id),
                 icon: const Icon(Icons.delete),
                 label: const Text('Delete'),
                 style: TextButton.styleFrom(
@@ -43,10 +71,9 @@ class CardItem extends StatelessWidget {
             : IconButton(
                 icon: const Icon(Icons.delete),
                 color: Colors.red,
-                onPressed: () => null,
+                onPressed: () => _showDialog(context),
               ),
       ),
     );
-    ;
   }
 }

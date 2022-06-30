@@ -2,12 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:test_android/models/barang.dart';
+import 'package:test_android/screens/main_drawer.dart';
 import 'package:test_android/services/barang.dart';
 import 'package:test_android/widgets/itemList.dart';
 import 'package:test_android/widgets/modal.dart';
 
 class BarangScreen extends StatefulWidget {
-  static String routeName = '/customer';
+  static String routeName = '/barang';
   const BarangScreen({Key? key}) : super(key: key);
 
   @override
@@ -102,52 +103,56 @@ class _BarangScreenState extends State<BarangScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: const MainDrawer(),
+        appBar: AppBar(
+          title: const Text('Barang'),
+        ),
         body: Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: TextField(
-            onChanged: (value) => _runFilter(value),
-            decoration: const InputDecoration(
-                fillColor: Colors.white,
-                hintText: "Search",
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 20,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: TextField(
+                onChanged: (value) => _runFilter(value),
+                decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    hintText: "Search",
+                    prefixIcon: Icon(
+                      Icons.search,
+                      size: 20,
+                    ),
+                    border: OutlineInputBorder()),
+                keyboardType: TextInputType.text,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ItemList(
+                isLoaded: isLoaded,
+                foundItems: _foundBarangs,
+                delete: _deleteBarang),
+            const SizedBox(
+              height: 20,
+            ),
+            Center(
+              child: Ink(
+                decoration: const ShapeDecoration(
+                  color: Colors.pink,
+                  shape: CircleBorder(),
                 ),
-                border: OutlineInputBorder()),
-            keyboardType: TextInputType.text,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        ItemList(
-            isLoaded: isLoaded,
-            foundItems: _foundBarangs,
-            delete: _deleteBarang),
-        const SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: Ink(
-            decoration: const ShapeDecoration(
-              color: Colors.pink,
-              shape: CircleBorder(),
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.add),
-              color: Colors.white,
-              onPressed: () {
-                _showAddTransaction(context);
-              },
-            ),
-          ),
-        )
-      ],
-    ));
+                child: IconButton(
+                  icon: const Icon(Icons.add),
+                  color: Colors.white,
+                  onPressed: () {
+                    _showAddTransaction(context);
+                  },
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }

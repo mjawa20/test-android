@@ -71,5 +71,3 @@ class _NewTransactionState extends State<NewTransaction> {
     );
   }
 }
-
-void addTx(String enteredTitle, double enteredAmount, DateTime? selectedDate) {}

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:test_android/screens/BarangScreen.dart';
+import 'package:test_android/screens/customerScreen.dart';
+import 'package:test_android/screens/transaksiScreen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -15,7 +18,7 @@ class MainDrawer extends StatelessWidget {
             alignment: Alignment.centerLeft,
             decoration: const BoxDecoration(color: Colors.amber),
             child: const Text(
-              'cooking up!',
+              'Produksi',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
@@ -25,30 +28,44 @@ class MainDrawer extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          const ListTile(
-            // onTap: () {
-            //   Navigator.of(context).pushReplacementNamed('/');
-            // },
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+            leading: const Icon(
               Icons.restaurant,
               size: 26,
             ),
-            title: Text(
-              'Meals',
+            title: const Text(
+              'Transaksi',
               style: TextStyle(fontSize: 23),
             ),
           ),
-          const ListTile(
-            // onTap: () {
-            //   Navigator.of(context)
-            //       .pushReplacementNamed(FiltersScreen.routeName);
-            // },
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(CustomerScreen.routeName);
+            },
+            leading: const Icon(
+              Icons.restaurant,
+              size: 26,
+            ),
+            title: const Text(
+              'Customer',
+              style: TextStyle(fontSize: 23),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.of(context)
+                  .pushReplacementNamed(BarangScreen.routeName);
+            },
+            leading: const Icon(
               Icons.settings,
               size: 26,
             ),
-            title: Text(
-              'Filters',
+            title: const Text(
+              'Barang',
               style: TextStyle(fontSize: 23),
             ),
           ),

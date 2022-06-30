@@ -11,18 +11,15 @@ String salesToJson(List<Sales> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Sales {
-  Sales({
-    required this.id,
-    required this.kode,
-    required this.tgl,
-    required this.mcustomerId,
-    required this.subtotal,
-    required this.diskon,
-    required this.ongkir,
-    required this.totalBayar,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+  Sales(
+      {required this.id,
+      required this.kode,
+      required this.tgl,
+      required this.mcustomerId,
+      required this.subtotal,
+      required this.diskon,
+      required this.ongkir,
+      required this.totalBayar});
 
   int id;
   String kode;
@@ -32,8 +29,6 @@ class Sales {
   int diskon;
   int ongkir;
   int totalBayar;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   factory Sales.fromJson(Map<String, dynamic> json) => Sales(
         id: json["id"],
@@ -44,8 +39,6 @@ class Sales {
         diskon: json["diskon"],
         ongkir: json["ongkir"],
         totalBayar: json["total_bayar"],
-        createdAt: DateTime.parse(json["created_at"]),
-        updatedAt: DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,7 +51,5 @@ class Sales {
         "diskon": diskon,
         "ongkir": ongkir,
         "total_bayar": totalBayar,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
       };
 }

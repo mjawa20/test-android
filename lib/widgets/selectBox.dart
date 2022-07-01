@@ -12,7 +12,7 @@ class DropdownScreen extends StatefulWidget {
 }
 
 class DropdownScreenState extends State<DropdownScreen> {
-  static dynamic selectedItem;
+  dynamic selectedItem;
   @override
   Widget build(BuildContext context) {
     return Center(

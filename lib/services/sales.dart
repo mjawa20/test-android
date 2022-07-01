@@ -23,9 +23,8 @@ class SalesService {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "kode": sales.kode,
         "tgl": sales.tgl.toString(),
-        "mcustomerId": sales.mcustomerId,
+        "mcustomer_id": sales.mcustomerId,
         "subtotal": sales.subtotal,
         "diskon": sales.diskon,
         "ongkir": sales.ongkir,

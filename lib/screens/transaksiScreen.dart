@@ -3,12 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:test_android/models/barang.dart';
 import 'package:test_android/models/customer.dart';
+import 'package:test_android/models/sales.dart';
 import 'package:test_android/models/salesDets.dart';
 import 'package:test_android/services/barang.dart';
 import 'package:test_android/services/customer.dart';
+import 'package:test_android/services/sales.dart';
 import 'package:test_android/widgets/cardItem.dart';
 import 'package:intl/intl.dart';
 import 'package:test_android/widgets/modalTransaction.dart';
+import 'package:test_android/widgets/selectBox.dart';
 import 'package:test_android/widgets/summary.dart';
 
 class TransaksiScreen extends StatefulWidget {
@@ -28,6 +31,7 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
   var isLoaded = false;
   int ongkir = 0;
   int diskon = 0;
+  int _customerId = 0;
   @override
   void initState() {
     _getData();
@@ -96,8 +100,38 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
     });
   }
 
-  void handlePost(total) {
-    print(total);
+  void handlePost() async {
+    if (_customerId == 0 || _selectedDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Failed!! Customer field and SelectDate is Required")));
+      return;
+    }
+    setState(() {
+      isLoaded = false;
+    });
+    Sales newSales = Sales(
+        id: 0,
+        kode: '',
+        tgl: _selectedDate!,
+        mcustomerId: _customerId,
+        subtotal: getSubtotal(),
+        diskon: diskon,
+        ongkir: ongkir,
+        totalBayar: total());
+    var response = await SalesService.createSales(newSales);
+    if (response.statusCode == 200) {
+      setState(() {
+        _carts.clear();
+        isLoaded = true;
+      });
+
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Post Success")));
+      return;
+    }
+    print(response.body);
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Post Failed")));
   }
 
   void deleteSales(int id) {
@@ -126,6 +160,10 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
     return getSubtotal() + ongkir - diskon;
   }
 
+  void setValue(Customer e) {
+    _customerId = e.id;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -146,20 +184,14 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    child: const TextField(
-                      onChanged: null,
-                      decoration: InputDecoration(
-                          counterStyle: TextStyle(height: 10),
-                          label: Text("Search"),
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder()),
-                      keyboardType: TextInputType.text,
-                    ),
-                  ),
-                  Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      child: isLoaded && _customers!.isNotEmpty
+                          ? DropdownScreen(
+                              items: _customers!, setValue: setValue)
+                          : null),
+                  SizedBox(
                     height: 70,
                     child: Row(
                       children: [

@@ -81,7 +81,8 @@ class Summary extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(onPressed: submitPost(), child: const Text("Save")),
+            ElevatedButton(
+                onPressed: () => submitPost(), child: const Text("Save")),
           ],
         ),
       ],

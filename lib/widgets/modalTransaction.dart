@@ -38,7 +38,6 @@ class _NewTransactionState extends State<NewTransaction> {
   }
 
   void setValue(Barang e) {
-    print('asdasdssssssssssssssssssssss');
     _barangId = e.id;
   }
 

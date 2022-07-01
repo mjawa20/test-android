@@ -1,36 +1,45 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_android/models/customer.dart';
-import 'package:test_android/models/sales.dart';
 
-class SelectBox extends StatefulWidget {
-  final List<dynamic>? items;
-
-  SelectBox({required this.items});
+class DropdownScreen extends StatefulWidget {
+  List<dynamic> items;
+  Function setValue;
+  DropdownScreen({Key? key, required this.items, required this.setValue})
+      : super(key: key);
 
   @override
-  State<SelectBox> createState() => _SelectBoxState();
+  State createState() => DropdownScreenState();
 }
 
-class _SelectBoxState extends State<SelectBox> {
-  int value = 0;
-  String nama = "All";
+class DropdownScreenState extends State<DropdownScreen> {
+  static dynamic selectedItem;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: DropdownButton<String>(
-        isExpanded: true,
-        value: value.toString(),
-        onChanged: (val) => {
-          value = int.parse(val.toString()),
-          nama =
-              widget.items?.where((element) => element.id == value).first.nama,
+    return Center(
+      child: DropdownButton<dynamic>(
+        hint: Text("Select item"),
+        value: selectedItem,
+        onChanged: (value) {
+          setState(() {
+            selectedItem = value;
+          });
+          print("------------------------");
+          widget.setValue(selectedItem);
         },
-        items: widget.items?.map(buildMenuItem).toList(),
+        items: widget.items.map((dynamic user) {
+          return DropdownMenuItem<dynamic>(
+            value: user,
+            child: Row(
+              children: <Widget>[
+                Text(
+                  user.nama,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
       ),
     );
   }
-
-  DropdownMenuItem<String> buildMenuItem(dynamic item) =>
-      DropdownMenuItem(value: "asd", child: Text(nama.toString()));
 }

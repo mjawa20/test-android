@@ -4,14 +4,14 @@ import 'dart:convert';
 //
 //     final sales = salesFromJson(jsonString);
 
-List<Sales> salesFromJson(String str) =>
-    List<Sales>.from(json.decode(str).map((x) => Sales.fromJson(x)));
+List<SalesDets> salesFromJson(String str) =>
+    List<SalesDets>.from(json.decode(str).map((x) => SalesDets.fromJson(x)));
 
-String salesToJson(List<Sales> data) =>
+String salesToJson(List<SalesDets> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Sales {
-  Sales({
+class SalesDets {
+  SalesDets({
     required this.id,
     required this.salesId,
     required this.barangId,
@@ -33,7 +33,7 @@ class Sales {
   int hargaDiskon;
   int total;
 
-  factory Sales.fromJson(Map<String, dynamic> json) => Sales(
+  factory SalesDets.fromJson(Map<String, dynamic> json) => SalesDets(
         id: json["id"],
         salesId: json["sales_id"],
         barangId: json["barang_id"],

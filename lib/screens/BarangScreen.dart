@@ -76,11 +76,11 @@ class _BarangScreenState extends State<BarangScreen> {
     }
   }
 
-  void _showAddTransaction(BuildContext ctx) {
+  void _showAddItem(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
-          return NewTransaction(_addNewBarang);
+          return NewItem(_addNewBarang);
         });
   }
 
@@ -147,7 +147,7 @@ class _BarangScreenState extends State<BarangScreen> {
                   icon: const Icon(Icons.add),
                   color: Colors.white,
                   onPressed: () {
-                    _showAddTransaction(context);
+                    _showAddItem(context);
                   },
                 ),
               ),

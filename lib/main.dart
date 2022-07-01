@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Transaksi',
       theme: ThemeData(
           textTheme: const TextTheme(
               bodyText1: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),

@@ -18,7 +18,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   List<Sales>? _sales;
-  List<Customer>? _customers;
+  List<Customer>? _customers = [];
   List<Sales>? _foundHistorys;
   var isLoaded = false;
 
@@ -40,7 +40,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     _sales = await SalesService().getSales();
     _customers = await CustomerService().getCustomers();
     _foundHistorys = _sales;
-    if (_sales != null) {
+    if (_sales != null && _customers != null) {
       setState(() {
         isLoaded = true;
       });
@@ -85,10 +85,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
         body: Column(
       children: [
-        const SizedBox(
-          height: 20,
-        ),
-        SelectBox(items: _customers),
         const SizedBox(
           height: 20,
         ),

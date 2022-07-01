@@ -76,11 +76,11 @@ class _CustomerScreenState extends State<CustomerScreen> {
     }
   }
 
-  void _showAddTransaction(BuildContext ctx) {
+  void _showAddItem(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
         builder: (_) {
-          return NewTransaction(_addNewCustomer);
+          return NewItem(_addNewCustomer);
         });
   }
 
@@ -147,7 +147,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
                   icon: const Icon(Icons.add),
                   color: Colors.white,
                   onPressed: () {
-                    _showAddTransaction(context);
+                    _showAddItem(context);
                   },
                 ),
               ),

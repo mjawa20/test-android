@@ -7,13 +7,15 @@ class CardItem extends StatelessWidget {
   final String title;
   final String subtitle;
   final Function delete;
+  final int? qty;
   // final Function deleteTx;
   CardItem(
       {required this.id,
       required this.code,
       required this.title,
       required this.subtitle,
-      required this.delete});
+      required this.delete,
+      this.qty});
 
   void _showDialog(BuildContext ctx) {
     showDialog(
@@ -25,7 +27,7 @@ class CardItem extends StatelessWidget {
               TextButton(
                   onPressed: () => {
                         Navigator.of(ctx).pop(),
-                        delete(id),
+                        delete(int.parse(id)),
                       },
                   child: const Text("Yes")),
               TextButton(
@@ -58,7 +60,7 @@ class CardItem extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(subtitle),
+        subtitle: Text(qty.toString() + " X " + subtitle),
         trailing: mediaQuery.size.width > 460
             ? TextButton.icon(
                 onPressed: () => delete(id),

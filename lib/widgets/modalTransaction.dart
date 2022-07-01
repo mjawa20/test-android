@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:test_android/models/barang.dart';
+import 'package:test_android/models/customer.dart';
+import 'package:test_android/widgets/selectBox.dart';
 // import 'package:intl/intl.dart';
 
-class NewItem extends StatefulWidget {
+class NewTransaction extends StatefulWidget {
   final Function addTx;
+  final dynamic items;
 
-  NewItem(this.addTx);
+  NewTransaction(this.addTx, this.items);
 
   @override
-  State<NewItem> createState() => _NewItemState();
+  State<NewTransaction> createState() => _NewTransactionState();
 }
 
-class _NewItemState extends State<NewItem> {
+class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
+  int _barangId = 0;
 
   void _submit() {
     if (_amountController.text.isEmpty) {
@@ -20,14 +26,20 @@ class _NewItemState extends State<NewItem> {
     }
     final String enteredTitle = _titleController.text;
     final int enteredAmount = int.parse(_amountController.text);
-    if (enteredAmount <= 0 || enteredTitle.isEmpty) {
+    if (enteredAmount < 0 || enteredTitle.isEmpty) {
       return;
     }
     widget.addTx(
-      enteredTitle,
       enteredAmount,
+      int.parse(enteredTitle),
+      _barangId,
     );
     Navigator.of(context).pop();
+  }
+
+  void setValue(Barang e) {
+    print('asdasdssssssssssssssssssssss');
+    _barangId = e.id;
   }
 
   @override
@@ -44,14 +56,20 @@ class _NewItemState extends State<NewItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              DropdownScreen(
+                items: widget.items,
+                setValue: setValue,
+              ),
               TextField(
-                decoration: const InputDecoration(labelText: 'Nama'),
+                decoration: const InputDecoration(labelText: 'Qty'),
+                keyboardType: const TextInputType.numberWithOptions(),
                 controller: _titleController,
-                keyboardType: TextInputType.text,
                 onSubmitted: (_) => _submit,
               ),
               TextField(
-                decoration: const InputDecoration(labelText: 'Phone'),
+                maxLength: 2,
+                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                decoration: const InputDecoration(labelText: 'Diskon'),
                 keyboardType: const TextInputType.numberWithOptions(),
                 controller: _amountController,
                 onSubmitted: (_) => _submit,

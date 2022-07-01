@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:test_android/models/sales.dart';
-import 'package:test_android/models/sales.dart';
 
 class SalesService {
   Future<List<Sales>?> getSales() async {
@@ -28,7 +27,7 @@ class SalesService {
         "subtotal": sales.subtotal,
         "diskon": sales.diskon,
         "ongkir": sales.ongkir,
-        "totalBayar": sales.totalBayar
+        "total_bayar": sales.totalBayar
       }),
     );
 

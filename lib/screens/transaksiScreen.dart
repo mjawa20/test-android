@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:test_android/models/barang.dart';
 import 'package:test_android/models/customer.dart';
@@ -79,7 +77,6 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
 
   final List<SalesDets> _carts = [];
   void _addNewSales(int diskon, int qty, int barangId) {
-    print("===========================================");
     Barang selectBarang = getBarang(barangId);
     double diskonNilai = selectBarang.harga.toDouble() * diskon / 100;
     int hargaDiskon = selectBarang.harga - diskonNilai.round();
@@ -94,7 +91,6 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
         diskonNilai: diskonNilai.toInt(),
         hargaDiskon: hargaDiskon,
         total: hargaDiskon * qty);
-    print(newCart.id);
     setState(() {
       _carts.add(newCart);
     });
@@ -129,7 +125,6 @@ class _TransaksiScreenState extends State<TransaksiScreen> {
           .showSnackBar(const SnackBar(content: Text("Post Success")));
       return;
     }
-    print(response.body);
     ScaffoldMessenger.of(context)
         .showSnackBar(const SnackBar(content: Text("Post Failed")));
   }

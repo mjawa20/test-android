@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SnackbarWidget extends StatelessWidget {
   final String message;
 
-  SnackbarWidget({required this.message});
+  const SnackbarWidget({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

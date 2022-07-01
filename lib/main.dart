@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.pink, accentColor: Colors.amber)),
       initialRoute: '/',
       routes: {
-        '/': (ctx) => TabsScreen(),
+        '/': (ctx) => const TabsScreen(),
         HistoryScreen.routeName: (ctx) => const HistoryScreen(),
         CustomerScreen.routeName: (ctx) => const CustomerScreen(),
         BarangScreen.routeName: (ctx) => const BarangScreen(),

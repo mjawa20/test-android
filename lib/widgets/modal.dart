@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class NewItem extends StatefulWidget {
   final Function addTx;
 
-  NewItem(this.addTx);
+  const NewItem(this.addTx, {Key? key}) : super(key: key);
 
   @override
   State<NewItem> createState() => _NewItemState();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_android/models/customer.dart';
 
 class DropdownScreen extends StatefulWidget {
   List<dynamic> items;
@@ -17,13 +16,12 @@ class DropdownScreenState extends State<DropdownScreen> {
   Widget build(BuildContext context) {
     return Center(
       child: DropdownButton<dynamic>(
-        hint: Text("Select item"),
+        hint: const Text("Select item"),
         value: selectedItem,
         onChanged: (value) {
           setState(() {
             selectedItem = value;
           });
-          print("------------------------");
           widget.setValue(selectedItem);
         },
         items: widget.items.map((dynamic user) {
@@ -33,7 +31,7 @@ class DropdownScreenState extends State<DropdownScreen> {
               children: <Widget>[
                 Text(
                   user.nama,
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 ),
               ],
             ),

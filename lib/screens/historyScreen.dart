@@ -6,7 +6,6 @@ import 'package:test_android/models/sales.dart';
 import 'package:test_android/services/customer.dart';
 import 'package:test_android/services/sales.dart';
 import 'package:test_android/widgets/itemList.dart';
-import 'package:test_android/widgets/selectBox.dart';
 
 class HistoryScreen extends StatefulWidget {
   static String routeName = '/customer';
@@ -64,7 +63,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
   void _deleteHistory(String id) async {
     var response = await SalesService.deleteSales(id);
 
-    isShowSnackbar(response.statusCode == 200);
+    if (response.statusCode == 200) {
+      _getData();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Success Delete")));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Failed Delete")));
+    }
   }
 
   void _runFilter(String enteredKeyword) {
@@ -89,6 +95,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           height: 20,
         ),
         ItemList(
+            customers: _customers,
             isLoaded: isLoaded,
             foundItems: _foundHistorys,
             delete: _deleteHistory),

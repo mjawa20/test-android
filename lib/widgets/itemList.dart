@@ -6,10 +6,19 @@ import 'package:test_android/widgets/cardItem.dart';
 class ItemList extends StatelessWidget {
   final bool isLoaded;
   final List<dynamic>? foundItems;
+  final List<dynamic>? customers;
   final Function delete;
 
-  ItemList(
-      {required this.isLoaded, required this.foundItems, required this.delete});
+  const ItemList(
+      {Key? key,
+      required this.isLoaded,
+      this.customers,
+      required this.foundItems,
+      required this.delete})
+      : super(key: key);
+  String getNama(id) {
+    return customers!.where((element) => element.id == id).first.nama;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +39,14 @@ class ItemList extends StatelessWidget {
                   return CardItem(
                     id: foundItems![index].id.toString(),
                     code: foundItems![index].kode,
-                    title: foundItems![index].nama,
+                    title: jsonEncode(foundItems![index]).contains("nama")
+                        ? foundItems![index].nama
+                        : getNama(foundItems![index].mcustomerId),
                     subtitle: jsonEncode(foundItems![index]).contains("telp")
                         ? foundItems![index].telp
-                        : foundItems![index].harga.toString(),
+                        : jsonEncode(foundItems![index]).contains("harga")
+                            ? foundItems![index].harga.toString()
+                            : foundItems![index].subtotal.toString(),
                     delete: delete,
                   );
                 },

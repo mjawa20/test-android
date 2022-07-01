@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:test_android/models/barang.dart';
-import 'package:test_android/models/customer.dart';
 import 'package:test_android/widgets/selectBox.dart';
 // import 'package:intl/intl.dart';
 
@@ -9,7 +8,7 @@ class NewTransaction extends StatefulWidget {
   final Function addTx;
   final dynamic items;
 
-  NewTransaction(this.addTx, this.items);
+  const NewTransaction(this.addTx, this.items, {Key? key}) : super(key: key);
 
   @override
   State<NewTransaction> createState() => _NewTransactionState();

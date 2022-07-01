@@ -1,11 +1,11 @@
-import 'package:test_android/screens/customerScreen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:test_android/screens/historyScreen.dart';
 import 'package:test_android/screens/main_drawer.dart';
 import 'package:test_android/screens/transaksiScreen.dart';
 
 class TabsScreen extends StatefulWidget {
+  const TabsScreen({Key? key}) : super(key: key);
+
   @override
   State<TabsScreen> createState() => _TabsScreenState();
 }

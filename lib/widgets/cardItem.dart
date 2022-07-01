@@ -27,7 +27,7 @@ class CardItem extends StatelessWidget {
               TextButton(
                   onPressed: () => {
                         Navigator.of(ctx).pop(),
-                        delete(int.parse(id)),
+                        delete(id),
                       },
                   child: const Text("Yes")),
               TextButton(
@@ -60,7 +60,7 @@ class CardItem extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(qty.toString() + " X " + subtitle),
+        subtitle: Text((qty != null ? qty.toString() + " X " : "") + subtitle),
         trailing: mediaQuery.size.width > 460
             ? TextButton.icon(
                 onPressed: () => delete(id),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_android/screens/BarangScreen.dart';
 import 'package:test_android/screens/customerScreen.dart';
-import 'package:test_android/screens/transaksiScreen.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key}) : super(key: key);
@@ -33,7 +32,7 @@ class MainDrawer extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/');
             },
             leading: const Icon(
-              Icons.restaurant,
+              Icons.production_quantity_limits,
               size: 26,
             ),
             title: const Text(
@@ -47,7 +46,7 @@ class MainDrawer extends StatelessWidget {
                   .pushReplacementNamed(CustomerScreen.routeName);
             },
             leading: const Icon(
-              Icons.restaurant,
+              Icons.supervised_user_circle_rounded,
               size: 26,
             ),
             title: const Text(
@@ -61,7 +60,7 @@ class MainDrawer extends StatelessWidget {
                   .pushReplacementNamed(BarangScreen.routeName);
             },
             leading: const Icon(
-              Icons.settings,
+              Icons.list_alt_outlined,
               size: 26,
             ),
             title: const Text(

@@ -7,7 +7,7 @@ class SalesService {
   Future<List<Sales>?> getSales() async {
     var client = http.Client();
     var uri = Uri.parse(
-        'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.ioapi/transaction');
+        'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.io/api/transaction');
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var json = response.body;
@@ -19,7 +19,7 @@ class SalesService {
     var client = http.Client();
     var response = await client.post(
       Uri.parse(
-          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.ioapi/transaction'),
+          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.io/api/transaction'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -40,7 +40,7 @@ class SalesService {
     var client = http.Client();
     var response = await client.delete(
       Uri.parse(
-          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.ioapi/transaction/' +
+          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.io/api/transaction/' +
               id),
     );
 

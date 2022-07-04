@@ -7,7 +7,7 @@ class CustomerService {
   Future<List<Customer>?> getCustomers() async {
     var client = http.Client();
     var uri = Uri.parse(
-        'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.ioapi/customers');
+        'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.io/api/customers');
     var response = await client.get(uri);
     if (response.statusCode == 200) {
       var json = response.body;
@@ -19,7 +19,7 @@ class CustomerService {
     var client = http.Client();
     var response = await client.post(
       Uri.parse(
-          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.ioapi/customers'),
+          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.io/api/customers'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -37,7 +37,7 @@ class CustomerService {
     var client = http.Client();
     var response = await client.delete(
       Uri.parse(
-          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.ioapi/customers/' +
+          'https://1dc6-2001-448a-3040-7ea3-d42a-c123-b1dd-5ca9.ap.ngrok.io/api/customers/' +
               id),
     );
 
